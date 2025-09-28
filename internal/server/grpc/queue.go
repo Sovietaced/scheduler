@@ -10,6 +10,7 @@ type QueueServer struct {
 	serverpb.UnimplementedQueueServiceServer
 }
 
-func (q *QueueServer) CreateQueue(ctx context.Context, req *serverpb.CreateQueueRequest) (*serverpb.CreateQueueResponse, error) {
+func (q *QueueServer) Sync(ctx context.Context, request *serverpb.SyncRequest) (*serverpb.SyncResponse, error) {
+	//TODO implement me
 	panic("implement me")
 }

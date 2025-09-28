@@ -24,6 +24,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 
 	serverpb.RegisterQueueServiceServer(grpcServer, &servergrpc.QueueServer{})
+	serverpb.RegisterExecutorServiceServer(grpcServer, &servergrpc.ExecutorServer{})
 	// Enable server reflection for easier debugging with tools like grpcurl.
 	reflection.Register(grpcServer)
 

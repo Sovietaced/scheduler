@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package server;
+
+// Set the Go package path and package name for generated code.
+option go_package = "github.com/sovietaced/scheduler/api/gen/pb-go/server";
+
+message SyncRequest {
+}
+
+message SyncResponse {
+
+}
+
+service ExecutorService {
+  rpc Sync(SyncRequest) returns (SyncResponse);
+}
