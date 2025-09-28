@@ -11,5 +11,5 @@ type ExecutorServer struct {
 }
 
 func (s *ExecutorServer) Sync(ctx context.Context, req *serverpb.SyncRequest) (*serverpb.SyncResponse, error) {
-	panic("implement me")
+	return &serverpb.SyncResponse{}, nil
 }

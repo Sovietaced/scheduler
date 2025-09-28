@@ -1,14 +1,14 @@
 package main
 
 import (
+	"context"
 	"log"
 	"net"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
-
 	serverpb "github.com/sovietaced/scheduler/api/gen/pb-go/server"
+	"github.com/sovietaced/scheduler/internal/scheduler"
 	servergrpc "github.com/sovietaced/scheduler/internal/server/grpc"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -25,8 +25,11 @@ func main() {
 
 	serverpb.RegisterQueueServiceServer(grpcServer, &servergrpc.QueueServer{})
 	serverpb.RegisterExecutorServiceServer(grpcServer, &servergrpc.ExecutorServer{})
-	// Enable server reflection for easier debugging with tools like grpcurl.
-	reflection.Register(grpcServer)
+
+	s := scheduler.NewScheduler()
+	go func() {
+		s.Run(context.Background())
+	}()
 
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("gRPC server exited: %v", err)
