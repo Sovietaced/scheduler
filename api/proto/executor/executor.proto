@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package executor;
+
+// Set the Go package path and package name for generated code.
+option go_package = "github.com/sovietaced/scheduler/api/gen/pb-go/executor";
+
+// A simple Hello World RPC definition.
+message HelloRequest {
+  // Optional name to personalize the greeting.
+  string name = 1;
+}
+
+message HelloReply {
+  // The greeting message.
+  string message = 1;
+}
+
+// Service exposing a Hello World RPC.
+service ExecutorService {
+  // Returns a greeting for the provided name.
+  rpc SayHello(HelloRequest) returns (HelloReply);
+}
