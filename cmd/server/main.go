@@ -22,8 +22,8 @@ func main() {
 	log.Printf("gRPC server listening on %s", addr)
 
 	grpcServer := grpc.NewServer()
-	// Register our hello world service.
-	serverpb.RegisterServerServiceServer(grpcServer, &servergrpc.HelloServer{})
+
+	serverpb.RegisterQueueServiceServer(grpcServer, &servergrpc.QueueServer{})
 	// Enable server reflection for easier debugging with tools like grpcurl.
 	reflection.Register(grpcServer)
 

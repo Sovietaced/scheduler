@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package server;
+
+// Set the Go package path and package name for generated code.
+option go_package = "github.com/sovietaced/scheduler/api/gen/pb-go/server";
+
+message Queue {
+  string name = 1;
+  bool enabled = 2; // maybe make this into a more advanced enum
+}
+
+message CreateQueueRequest {
+  string name = 1;
+  bool enabled = 2;
+}
+
+message CreateQueueResponse {
+
+}
+
+service QueueService {
+  rpc CreateQueue(CreateQueueRequest) returns (CreateQueueResponse);
+}
