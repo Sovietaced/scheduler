@@ -25,6 +25,7 @@ func main() {
 
 	serverpb.RegisterQueueServiceServer(grpcServer, &servergrpc.QueueServer{})
 	serverpb.RegisterExecutorServiceServer(grpcServer, &servergrpc.ExecutorServer{})
+	serverpb.RegisterWorkloadServiceServer(grpcServer, &servergrpc.WorkloadServer{})
 
 	s := scheduler.NewScheduler()
 	go func() {

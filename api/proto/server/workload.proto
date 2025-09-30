@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package server;
+
+import "google/protobuf/struct.proto";
+
+// Set the Go package path and package name for generated code.
+option go_package = "github.com/sovietaced/scheduler/api/gen/pb-go/server";
+
+message Workload {
+  string id = 1;
+  string queue = 2;
+  google.protobuf.Struct jobset = 3;
+}
+
+message CreateWorkloadRequest {
+  Workload workload = 1;
+}
+
+message CreateWorkloadResponse {
+}
+
+service WorkloadService {
+  rpc CreateWorkload(CreateWorkloadRequest) returns (CreateWorkloadResponse);
+}
