@@ -7,6 +7,7 @@ import (
 
 	serverpb "github.com/sovietaced/scheduler/api/gen/pb-go/server"
 	"github.com/sovietaced/scheduler/internal/scheduler"
+	"github.com/sovietaced/scheduler/internal/scheduler/datastore"
 	servergrpc "github.com/sovietaced/scheduler/internal/server/grpc"
 	"google.golang.org/grpc"
 )
@@ -27,7 +28,7 @@ func main() {
 	serverpb.RegisterExecutorServiceServer(grpcServer, &servergrpc.ExecutorServer{})
 	serverpb.RegisterWorkloadServiceServer(grpcServer, &servergrpc.WorkloadServer{})
 
-	s := scheduler.NewScheduler()
+	s := scheduler.NewScheduler(datastore.NewInMemoryJobDataStore(), datastore.NewInMemoryNodeDataStore())
 	go func() {
 		s.Run(context.Background())
 	}()

@@ -26,7 +26,10 @@ func (e *Executor) Run(ctx context.Context) {
 			return
 		case <-ticker.C:
 			fmt.Println("syncing")
-			e.executorClient.Sync(ctx, &serverpb.SyncRequest{})
+			_, err := e.executorClient.Sync(ctx, &serverpb.SyncRequest{})
+			if err != nil {
+				//FIXME: do something
+			}
 		}
 
 	}
