@@ -6,14 +6,16 @@ import (
 	"time"
 
 	serverpb "github.com/sovietaced/scheduler/api/gen/pb-go/server"
+	"k8s.io/client-go/kubernetes"
 )
 
 type Executor struct {
-	executorClient serverpb.ExecutorServiceClient
+	executorClient      serverpb.ExecutorServiceClient
+	clusterStateManager *ClusterStateManager
 }
 
-func NewExecutor(executorClient serverpb.ExecutorServiceClient) *Executor {
-	return &Executor{executorClient: executorClient}
+func NewExecutor(ctx context.Context, executorClient serverpb.ExecutorServiceClient, kubernetesClient kubernetes.Interface) *Executor {
+	return &Executor{executorClient: executorClient, clusterStateManager: NewClusterStateManager(ctx, kubernetesClient)}
 }
 
 func (e *Executor) Run(ctx context.Context) {
@@ -26,10 +28,16 @@ func (e *Executor) Run(ctx context.Context) {
 			return
 		case <-ticker.C:
 			fmt.Println("syncing")
-			_, err := e.executorClient.Sync(ctx, &serverpb.SyncRequest{})
+			//_, err := e.executorClient.Sync(ctx, &serverpb.SyncRequest{})
+			//if err != nil {
+			//	//FIXME: do something
+			//}
+
+			_, err := e.clusterStateManager.GetClusterState()
 			if err != nil {
-				//FIXME: do something
+				fmt.Println(fmt.Sprintf("cluster state manager error: %v", err))
 			}
+
 		}
 
 	}
