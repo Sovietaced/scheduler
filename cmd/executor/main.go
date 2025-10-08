@@ -29,7 +29,7 @@ func main() {
 		panic(fmt.Sprintf("unable to create k8s client: %v", err))
 	}
 
-	conn, err := grpc.NewClient("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("server:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err)
 	}

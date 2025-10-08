@@ -28,12 +28,12 @@ func (e *Executor) Run(ctx context.Context) {
 			return
 		case <-ticker.C:
 			fmt.Println("syncing")
-			//_, err := e.executorClient.Sync(ctx, &serverpb.SyncRequest{})
-			//if err != nil {
-			//	//FIXME: do something
-			//}
+			_, err := e.executorClient.Sync(ctx, &serverpb.SyncRequest{})
+			if err != nil {
+				fmt.Println(fmt.Sprintf("failed to sync: %v", err))
+			}
 
-			_, err := e.clusterStateManager.GetClusterState()
+			_, err = e.clusterStateManager.GetClusterState()
 			if err != nil {
 				fmt.Println(fmt.Sprintf("cluster state manager error: %v", err))
 			}
